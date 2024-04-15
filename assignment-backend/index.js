@@ -3,9 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require("cors");
-const mongoose = require("mongoose");
-const connectedDB = require('./db-connection');
-const employees = require("./models/employee");
+const connectedDB = require('./utils/db-connection');
 const router = require('./routes/router');
 
 
@@ -19,7 +17,7 @@ app.use(router);
 
 
 // mongodb connection
-connectedDB();
+// connectedDB();
 
 
 // error handler - global
@@ -27,6 +25,13 @@ connectedDB();
 
 // server
 const PORT = 8080;
-app.listen(PORT, () => {
-  console.log('Listening on port ' + PORT);
+// app.listen(PORT, () => {
+//   console.log('Listening on port ' + PORT);
+// });
+
+// // MongoDB connection and Server
+connectedDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`);
+  });
 });
