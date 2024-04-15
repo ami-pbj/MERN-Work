@@ -1,6 +1,4 @@
 const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 // Dashboard section - welcome page after signin/login -> "/dashboard"
 const dashboard = async (req, res) => {
@@ -54,9 +52,7 @@ const signin = async (req, res) => {
       return res.status(400).json({ msg: "User Not Exists !!" });
     }
 
-    // comparing password
-    // const userPwdValid = await bcrypt.compare(password, userExist.password);
-
+    // Comparing password
     const userPwdValid = await userExist.comparePassword(password);
 
     if (userPwdValid) {
