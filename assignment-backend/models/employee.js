@@ -9,14 +9,19 @@ const mongoose = require("mongoose");
 
 const employeeSchema = new mongoose.Schema({
   // f_Id: { type: Number, required: true },
-  f_Name: { type: String, required: true },
-  f_Email: { type: String, required: true, unique: true },
-  f_Mobile: { type: Number, required: true },
-  f_Designation: { type: String, required: true },
-  f_Course: { type: String, required: true },
-  f_Gender: { type: String, required: true },
+  // f_Name: { type: String, required: true },
+  // f_Email: { type: String, required: true, unique: true },
+  // f_Mobile: { type: Number, required: true },
+  // f_Designation: { type: String, required: true },
+  // f_Course: { type: String, required: true },
+  // f_Gender: { type: String, required: true },
   // f_Image: { type: String, required: true },
   // f_Createdate: { type: Number, required: true },
+
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  mobile: { type: Number, required: true },
+  password: { type: String, required: true },
 });
 
 const employees = new mongoose.model("employees", employeeSchema);

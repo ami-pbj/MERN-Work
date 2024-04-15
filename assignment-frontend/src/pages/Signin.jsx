@@ -5,39 +5,68 @@ import { useNavigate } from "react-router-dom";
 const Signin = () => {
   const history = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
-  async function submit(e) {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Handling the input fields
+  const handleInput = (e) => {
+    console.log(e);
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  // Handling the form submission
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      await axios
-        .post("http://localhost:8080/", {
-          email,
-          password,
-        })
-        .then((res) => {
-          if (res.data === "exist") {
-            history("/dashboard", { state: { id: email } });
-          } else if (res.data === "notexist") {
-            alert("User Not Exists !!");
-          }
-        })
-        .catch((e) => {
-          alert("Wrong Credentials !!");
-          console.log(e);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+    alert(user);
+
+    console.log(user);
+  };
+
+
+  // async function submit(e) {
+  //   e.preventDefault();
+
+  //   // try {
+  //   //   await axios
+  //   //     .post("http://localhost:8080/", {
+  //   //       email,
+  //   //       password,
+  //   //     })
+  //   //     .then((res) => {
+  //   //       if (res.data == "exist") {
+  //   //         history("/dashboard", { state: { id: email } });
+  //   //       } else if (res.data == "notexist") {
+  //   //         alert("User Not Exists !!");
+  //   //       }
+  //   //     })
+  //   //     .catch((e) => {
+  //   //       alert("Wrong Credentials !!");
+  //   //       console.log(e);
+  //   //     });
+  //   // } catch (e) {
+  //   //   console.log(e);
+  //   // }
+  // }
+
   return (
     <div className="signin">
       <h3>Login Page</h3>
 
       <>
-        <form action="POST">
+        <form action="POST" onSubmit={handleSubmit}>
           <div className="signin_form_layout">
             <div className="signin_form">
               <label htmlFor="email" className="signin_label">
@@ -45,10 +74,13 @@ const Signin = () => {
               </label>
               <input
                 type="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                name="email"
                 placeholder="Enter Email"
+                id="email"
+                required
+                autoComplete="off"
+                value={user.email}
+                onChange={handleInput}
               />
             </div>
             <div className="signin_form">
@@ -57,14 +89,17 @@ const Signin = () => {
               </label>
               <input
                 type="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                name="password"
                 placeholder="Enter Password"
+                id="password"
+                required
+                autoComplete="off"
+                value={user.password}
+                onChange={handleInput}
               />
             </div>
           </div>
-          <button type="submit" className="signin_btn" onClick={submit}>
+          <button type="submit" className="signin_btn">
             Login
           </button>
         </form>

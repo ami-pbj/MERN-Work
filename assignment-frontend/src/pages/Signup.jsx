@@ -5,86 +5,118 @@ import { useNavigate } from "react-router-dom";
 const Signup = () => {
   const history = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [gender, setGender] = useState("");
-  const [course, setCourse] = useState("");
-  const [imgUpload, setImgUpload] = useState("");
-  const [password, setPassword] = useState("");
-  const [employeeType, setEmployeeType] = useState("");
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [mobile, setMobile] = useState("");
+  // const [designation, setDesignation] = useState("");
+  // const [gender, setGender] = useState("");
+  // const [course, setCourse] = useState("");
+  // const [imgUpload, setImgUpload] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [employeeType, setEmployeeType] = useState("");
+
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    password: "",
+  });
+
+  // Handling the input fields
+  const handleInput = (e) => {
+    console.log(e);
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setUser({
+      ...user,
+      [name]: value,
+    });
+  };
+
+  // Handling the form submission
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    alert(user);
+
+    console.log(user);
+
+    const response = fetch(``)
+  };
 
   // Course Section - Checkbox
 
-  const [allChecked, setAllChecked] = React.useState([]);
-  function handleChange(e) {
-    if (e.target.checked) {
-      setAllChecked([...allChecked, e.target.value]);
-    } else {
-      setAllChecked(allChecked.filter((item) => item !== e.target.value));
-    }
-  }
+  // const [allChecked, setAllChecked] = React.useState([]);
+  // function handleChange(e) {
+  //   if (e.target.checked) {
+  //     setAllChecked([...allChecked, e.target.value]);
+  //   } else {
+  //     setAllChecked(allChecked.filter((item) => item !== e.target.value));
+  //   }
+  // }
 
   // Designation Section - Dropdown
 
-  const options = [
-    {
-      label: "Select Designation",
-      value: "Select Designation",
-    },
-    { label: "HR", value: "hr" },
+  // const options = [
+  //   {
+  //     label: "Select Designation",
+  //     value: "Select Designation",
+  //   },
+  //   { label: "HR", value: "hr" },
 
-    { label: "Manager", value: "manager" },
+  //   { label: "Manager", value: "manager" },
 
-    { label: "Sales", value: "sales" },
-  ];
+  //   { label: "Sales", value: "sales" },
+  // ];
 
-  const [value, setValue] = React.useState("Select Designation");
+  // const [value, setValue] = React.useState("Select Designation");
 
-  const handleDesignationChange = (event) => {
-    setValue(event.target.value);
-  };
+  // const handleDesignationChange = (event) => {
+  //   setValue(event.target.value);
+  // };
 
-  async function submit(e) {
-    e.preventDefault();
+  // async function submit(e) {
+  //   e.preventDefault();
 
-    console.log(name, email, mobile, designation, gender, course, password);
+  //   // console.log(name, email, mobile, designation, gender, course, password);
 
-    try {
-      await axios
-        .post("http://localhost:8080/create", {
-          email,
-          password,
-        })
-        .then((res) => {
-          if (res.data === "exist") {
-            history("/dashboard", { state: { id: email } });
-          } else if (res.data === "notexist") {
-            alert("User Not Exists !!");
-          }
-        })
-        .catch((e) => {
-          alert("Wrong Credentials !!");
-          console.log(e);
-        });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  //   // try {
+  //   //   await axios
+  //   //     .post("http://localhost:8080/create", {
+  //   //       email,
+  //   //       password,
+  //   //     })
+  //   //     .then((res) => {
+  //   //       if (res.data == "exist") {
+  //   //         alert("User Exists !!");
+  //   //       } else if (res.data == "notexist") {
+  //   //         history("/dashboard", { state: { id: email } });
+  //   //       }
+  //   //     })
+  //   //     .catch((e) => {
+  //   //       alert("Wrong Credentials !!");
+  //   //       console.log(e);
+  //   //     });
+  //   // } catch (e) {
+  //   //   console.log(e);
+  //   // }
+  // }
+
   return (
     <div className="signin">
       <h3>Create Employee</h3>
 
       <>
-        <form action="POST" onSubmit={submit}>
+        <form action="POST" onSubmit={handleSubmit}>
           <div className="form_radio_btn">
             <input
               type="radio"
               name="EmployeeType"
               value="Employee"
               className="employee_radio_btn"
-              onChange={(e) => setEmployeeType(e.target.value)}
+              // onChange={(e) => setEmployeeType(e.target.value)}
               style={{ cursor: "pointer" }}
             />{" "}
             Employee
@@ -93,22 +125,31 @@ const Signup = () => {
               name="EmployeeType"
               value="Admin"
               className="admin_radio_btn"
-              onChange={(e) => setEmployeeType(e.target.value)}
+              // onChange={(e) => setEmployeeType(e.target.value)}
               style={{ cursor: "pointer" }}
             />{" "}
             Admin
           </div>
+
+          {/* Form Section */}
           <div className="signin_form_layout">
             <div className="signin_form">
-              <label htmlFor="email" className="signin_label">
+              <label htmlFor="name" className="signin_label">
                 Name
               </label>
               <input
                 type="text"
+                name="name"
                 placeholder="Enter Name"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
+                id="name"
+                required
+                autoComplete="off"
+                value={user.name}
+                // onChange={(e) => {
+                //   setName(e.target.value);
+                // }}
+
+                onChange={handleInput}
               />
             </div>
             <div className="signin_form">
@@ -117,22 +158,36 @@ const Signup = () => {
               </label>
               <input
                 type="email"
+                name="email"
                 placeholder="Enter Email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                id="email"
+                required
+                autoComplete="off"
+                value={user.email}
+                // onChange={(e) => {
+                //   setEmail(e.target.value);
+                // }}
+
+                onChange={handleInput}
               />
             </div>
             <div className="signin_form">
-              <label htmlFor="password" className="signin_label">
+              <label htmlFor="mobile" className="signin_label">
                 Mobile No
               </label>
               <input
-                type="text"
+                type="number"
+                name="mobile"
                 placeholder="Enter Mobile Number"
-                onChange={(e) => {
-                  setMobile(e.target.value);
-                }}
+                id="mobile"
+                required
+                autoComplete="off"
+                value={user.mobile}
+                // onChange={(e) => {
+                //   setMobile(e.target.value);
+                // }}
+
+                onChange={handleInput}
               />
             </div>
 
@@ -149,9 +204,9 @@ const Signup = () => {
                 }}
               /> */}
 
-              <label htmlFor="password" className="signin_label">
+              <label htmlFor="designation" className="signin_label">
                 Designation
-                <select
+                {/* <select
                   value={value}
                   className="signin_dropdown"
                   onChange={handleDesignationChange}
@@ -159,7 +214,7 @@ const Signup = () => {
                   {options.map((option) => (
                     <option value={option.value}>{option.label}</option>
                   ))}
-                </select>
+                </select> */}
               </label>
             </div>
 
@@ -173,7 +228,7 @@ const Signup = () => {
               }}
               /*onChange={this.setGender.bind(this)}*/
             >
-              <label htmlFor="email" className="signin_label">
+              <label htmlFor="gender" className="signin_label">
                 Gender
               </label>
               <div
@@ -232,7 +287,7 @@ const Signup = () => {
                   value="One"
                   type="checkbox"
                   style={{ marginLeft: "30px", cursor: "pointer" }}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                 />
                 <span> MCA </span>
 
@@ -240,7 +295,7 @@ const Signup = () => {
                   value="Two"
                   type="checkbox"
                   style={{ marginLeft: "30px", cursor: "pointer" }}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                 />
                 <span> BCA </span>
 
@@ -248,7 +303,7 @@ const Signup = () => {
                   value="Three"
                   type="checkbox"
                   style={{ marginLeft: "30px", cursor: "pointer" }}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                 />
                 <span> BSC </span>
               </div>
@@ -269,8 +324,28 @@ const Signup = () => {
             />
           </div> */}
 
+            <div className="signin_form">
+              <label htmlFor="password" className="signin_label">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                id="password"
+                required
+                autoComplete="off"
+                value={user.password}
+                // onChange={(e) => {
+                //   setPassword(e.target.value);
+                // }}
+
+                onChange={handleInput}
+              />
+            </div>
+
             {/* Showing Password Field for Admin Only */}
-            {employeeType == "Admin" ? (
+            {/* {employeeType == "Admin" ? (
               <div className="signin_form">
                 <label htmlFor="password" className="signin_label">
                   Password
@@ -278,15 +353,18 @@ const Signup = () => {
                 <input
                   type="password"
                   placeholder="Enter Password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
+                  value={user.password}
+                  // onChange={(e) => {
+                  //   setPassword(e.target.value);
+                  // }}
                 />
               </div>
-            ) : null}
+            ) : null} */}
           </div>
 
-          <button type="submit" className="signin_btn" onClick={submit}>
+          <button type="submit" className="signin_btn"
+            // onClick={handleSubmit}
+          >
             Submit
           </button>
         </form>
