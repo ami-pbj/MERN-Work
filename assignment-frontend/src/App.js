@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar, Header, Footer } from "./components";
-import { Signin, Signup, Dashboard, Employees, Edit } from "./pages";
+import { Signin, Signup, Dashboard, Employees, Edit, NotFound } from "./pages";
 
 function App() {
   return (
@@ -17,6 +17,8 @@ function App() {
           <Route path="/employees" element={[<Header />, <Employees />]} />
 
           <Route path="/employees/edit" element={[<Header />, <Edit />]} />
+
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
 
         {/* Common Footer */}
